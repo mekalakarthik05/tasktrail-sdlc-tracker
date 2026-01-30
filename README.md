@@ -112,10 +112,12 @@ This repo is set up for **one-go deployment** on Vercel: **frontend + backend** 
 
 1. **Vercel Dashboard** → Import your GitHub repo → **Configure Project**.
 2. **Root Directory:** Leave as **`.`** (or leave empty). Do **not** set to `client`.
-3. **Environment variables** (Settings → Environment Variables):
-   - `MONGODB_URI` or `MONGO_URI` = your MongoDB Atlas connection string (e.g. `mongodb+srv://...`)
-   - `API_KEY` = same key the client sends (e.g. `dev-api-key`). Set `VITE_API_KEY` to the same value if you use it in the client.
-4. **Save** → **Deploy**.
+3. **Environment variables** (Settings → Environment Variables) — **required** or API returns 500:
+   - **`MONGO_URI`** (or `MONGODB_URI`) = your MongoDB Atlas connection string, e.g. `mongodb+srv://user:pass@cluster.mongodb.net/dbname`. No quotes, no extra spaces.
+   - **`API_KEY`** = same key the client sends (e.g. `dev-api-key`). If the client uses `VITE_API_KEY`, set that to the same value so requests are not rejected with 401.
+   - Add to **Production** (and Preview if you want). **Redeploy** after changing env vars — they do not apply to existing deployments.
+4. **MongoDB Atlas:** Network Access → Add IP Address → `0.0.0.0/0` so Vercel can connect.
+5. **Save** → **Redeploy**.
 
 The root `vercel.json` defines install/build/output and SPA rewrites. No need to change Build Command or Output Directory in the UI if you use this file.
 
