@@ -100,6 +100,20 @@ All `/api/*` routes require header: `X-API-Key: <your-api-key>`.
 | PUT | `/api/tasks/:id` | Update task (e.g. phase, assignee) |
 | DELETE | `/api/tasks/:id` | Delete task |
 
+## Deploy Frontend to Vercel
+
+This repo is a **React (Vite)** app in the `client/` folder, not a plain HTML site. **Do not move `index.html` to the repo root.**
+
+1. **Vercel Dashboard** → Import your GitHub repo → **Configure Project**.
+2. **Root Directory:** Click **Edit** and set to **`client`** (so Vercel builds the React app).
+3. **Build & Output:**
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build` (default)
+   - **Output Directory:** `dist` (Vite’s default)
+4. **Save** → **Deploy**.
+
+The `client/vercel.json` in this repo sets these options so Vercel detects Vite correctly. After deploy, the site will load; the API calls will 404 until you deploy the backend (e.g. Render, Railway) and point the client to that API URL.
+
 ## What I Would Improve With More Time
 
 - **Authentication:** Real login (JWT/sessions), user-specific “My Tasks” instead of selecting user by dropdown.
