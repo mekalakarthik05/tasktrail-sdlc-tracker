@@ -1,0 +1,8 @@
+{
+  "name": "project-management-utility",
+  "private": true,
+  "description": "MERN Project Management Utility - Vercel one-go deploy",
+  "dependencies": {
+    "mongoose": "^8.0.3"
+  }
+}

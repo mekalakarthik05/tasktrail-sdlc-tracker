@@ -100,19 +100,24 @@ All `/api/*` routes require header: `X-API-Key: <your-api-key>`.
 | PUT | `/api/tasks/:id` | Update task (e.g. phase, assignee) |
 | DELETE | `/api/tasks/:id` | Delete task |
 
-## Deploy Frontend to Vercel
+## Deploy Full Stack on Vercel (one-go)
 
-This repo is a **React (Vite)** app in the `client/` folder, not a plain HTML site. **Do not move `index.html` to the repo root.**
+This repo is set up for **one-go deployment** on Vercel: **frontend + backend** together using Vercel Serverless Functions (no separate Express server).
+
+- **Root Directory:** **`.`** (repo root) — **not** `client`, so both `api/` and the client build are used.
+- **Build:** Root `vercel.json` runs `npm install` (root + client), then `cd client && npm run build`. Output: `client/dist`.
+- **API:** The `api/` folder at repo root is used as Vercel serverless routes: `/api/users`, `/api/tasks`, etc.
+
+### Vercel settings
 
 1. **Vercel Dashboard** → Import your GitHub repo → **Configure Project**.
-2. **Root Directory:** Click **Edit** and set to **`client`** (so Vercel builds the React app).
-3. **Build & Output:**
-   - **Framework Preset:** Vite
-   - **Build Command:** `npm run build` (default)
-   - **Output Directory:** `dist` (Vite’s default)
+2. **Root Directory:** Leave as **`.`** (or leave empty). Do **not** set to `client`.
+3. **Environment variables** (Settings → Environment Variables):
+   - `MONGODB_URI` or `MONGO_URI` = your MongoDB Atlas connection string (e.g. `mongodb+srv://...`)
+   - `API_KEY` = same key the client sends (e.g. `dev-api-key`). Set `VITE_API_KEY` to the same value if you use it in the client.
 4. **Save** → **Deploy**.
 
-The `client/vercel.json` in this repo sets these options so Vercel detects Vite correctly. After deploy, the site will load; the API calls will 404 until you deploy the backend (e.g. Render, Railway) and point the client to that API URL.
+The root `vercel.json` defines install/build/output and SPA rewrites. No need to change Build Command or Output Directory in the UI if you use this file.
 
 ## What I Would Improve With More Time
 
