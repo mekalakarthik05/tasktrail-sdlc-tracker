@@ -41,11 +41,6 @@ npm install
 
 Create a `.env` file (copy from `.env.example`):
 
-```env
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/project-management
-API_KEY=dev-api-key
-```
 
 Start the server:
 
